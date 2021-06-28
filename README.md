@@ -1,11 +1,11 @@
 - [CS 1632 - Software Quality Assurance](#cs-1632---software-quality-assurance)
   * [Desciption](#desciption)
-  * [Task 1: Write test cases](#task-1--write-test-cases)
+  * [Task 1: Write test cases](#task-1-write-test-cases)
     + [Tips for Writing assertions for each Test](#tips-for-writing-assertions-for-each-test)
     + [Other Tips](#other-tips)
-  * [Task 2: Add test cases to test suite and save project](#task-2--add-test-cases-to-test-suite-and-save-project)
-  * [Task 3: Export test suite to JUnit class](#task-3--export-test-suite-to-junit-class)
-    + [Tips for JUnit + Selenium problem solving](#tips-for-junit---selenium-problem-solving)
+  * [Task 2: Add test cases to test suite and save project](#task-2-add-test-cases-to-test-suite-and-save-project)
+  * [Task 3: Export test suite to JUnit class](#task-3-export-test-suite-to-junit-class)
+    + [Tips for JUnit + Selenium problem solving](#tips-for-junit--selenium-problem-solving)
   * [Submission](#submission)
   * [GradeScope Feedback](#gradescope-feedback)
   * [Resources](#resources)
@@ -17,7 +17,7 @@
 
 * DUE: Jul 2 (Friday), 2021 11:59 PM
 
-**GitHub Classroom Link:** 
+**GitHub Classroom Link:** https://classroom.github.com/g/TcOFne7o
 
 ## Desciption
 
@@ -177,7 +177,7 @@ You can now run the RedditCatsTest JUnit class using the provided
 * You can also run your Selenium tests on Eclipse using the "Run JUnit"
   feature, after opening the provided Eclipse project.
 
-Note that the script only works if you have Chrome version 90 installed on your
+Note that the script only works if you have Chrome version 91 installed on your
 computer (the most recent version as of today).  If you have a different
 version of Chrome, you may have to update the chromedriver.exe (or
 chromedriver) in your respective OS folder (Windows / Mac / Linux) by
