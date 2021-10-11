@@ -5,16 +5,24 @@
     + [Other Tips](#other-tips)
   * [Task 2: Add test cases to test suite and save project](#task-2-add-test-cases-to-test-suite-and-save-project)
   * [Task 3: Export test suite to JUnit class](#task-3-export-test-suite-to-junit-class)
-    + [Tips for JUnit + Selenium problem solving](#tips-for-junit--selenium-problem-solving)
+    + [Why export to a JUnit class?](#why-export-to-a-junit-class-)
+    + [How to export to JUnit for Selenium IDE](#how-to-export-to-junit-for-selenium-ide)
+    + [JUnit set up (Chrome browser specific)](#junit-set-up-chrome-browser-specific)
+    + [JUnit set up (Firefox browser specific)](#junit-set-up-firefox-browser-specific)
+    + [Running the JUnit class](#running-the-junit-class)
+  * [Tips for JUnit + Selenium problem solving](#tips-for-junit--selenium-problem-solving)
+    + [How to disable pop-ups (Chrome browser specific)](#how-to-disable-pop-ups-chrome-browser-specific)
+    + [How to disable pop-ups (Firefox browser specific)](#how-to-disable-pop-ups-firefox-browser-specific)
   * [Submission](#submission)
   * [GradeScope Feedback](#gradescope-feedback)
+  * [Groupwork Plan](#groupwork-plan)
   * [Resources](#resources)
 
 # CS 1632 - Software Quality Assurance
 
-* DUE: Jul 2 (Friday), 2021 11:59 PM
+* DUE: Oct 15 (Friday), 2021 11:59 PM
 
-**GitHub Classroom Link:** https://classroom.github.com/g/TcOFne7o
+**GitHub Classroom Link:** TBD
 
 ## Desciption
 
@@ -28,7 +36,9 @@ It was chosen because it is a nice safe subreddit which is policed pretty well. 
 
 First, let's start by adding the Selenium IDE browser extension for your web
 browser by selecting "Chrome Download" or "Firefox Download" on the below
-website:
+website (**Update: the "Chrome Download" option seems to be temporarily
+unavailable in the Chrome web store so you will have to install Firefox and
+then install the extension there.**):
 
 https://www.selenium.dev/selenium-ide/
 
@@ -79,17 +89,17 @@ Selenium IDE.  Take a peek but don't loiter!
 
 Sometimes your test case will not work as expected.  Here are a few hints on how to debug a problem:
 
-1. Check the Log window at the bottom of the Selenium IDE.  It will tell you
+1. Check the **Log window** at the bottom of the Selenium IDE.  It will tell you
    which step failed for what reason (in red).
 
 1. Select the test step that failed in the main test case window, and then
-   select the Reference tab at the bottom pane of the IDE.  It will display
+   select the **Reference tab** at the bottom pane of the IDE.  It will display
 usage instructions for that command.  Remember always, the first argument goes
 to the Target field and the second argument goes to the Value field, regardless
 of command.
 
 1. Sometimes the target component of a test step is the problem.  The selector
-   button tries to generate a locator string as best it can using xpath, css
+   button tries to generate a **locator string** as best it can using xpath, css
 selector, or id tag.  But it is not fool proof.  The problem is, the web page
 may change ever so slightly on the next page load (e.g. due to a new post, or a
 new comment) and then the locator will stop working.  You will notice that
@@ -107,14 +117,6 @@ in-depth discussion about locators:
 not exist ("assert element not present").  But to do this, you have to select
 the XPath position locator string in the drop-down list of optional strings in
 the Target field.
-
-1. For those of you who are working in groups, you will be working on the same
-   shared .side project file. So it is especially important that your pull
-before opening the project file and push immediately after you have modified
-and saved the project file. Otherwise, you may get merge conflicts. Merging
-conflicts is possible by using the technique described in 
-[Using\_Git](https://github.com/wonsunahn/CS1632_Summer2021/blob/master/lectures/Using_Git.pdf)
-slides, but it's best to avoid it.
 
 ## Task 2: Add test cases to test suite and save project
 
@@ -135,6 +137,38 @@ the below figure.  Press on the "Select" button.
 
 ## Task 3: Export test suite to JUnit class
 
+### Why export to a JUnit class?
+
+There are many reasons why you would want to export to JUnit.
+
+1. You may have a pre-existing testing framework in JUnit (or Python Pytest, or
+   JavaScript Mocha, etc).  And you may want to merge the Selenium IDE testing
+script to the language and framework of your choice.
+
+1. Exporting to JUnit really gives you a good sense of what's happening under
+   the covers (in terms of the actual calls to the webdriver).  Also, if there
+is a test case that is particularly hard to nail down just by using Selenium
+IDE, you can touch it up in the form of exported Java code.  
+
+1. Selenium IDE also gives the option to export your JUnit test directly to a
+   Selenium Grid which can run the test cases in parallel.  This can allow you
+to utilize a server farm to finish your testing very quickly, although we will
+not explore this option today.
+
+In the end, once you get familiar with the Selenium API and how locator strings
+work, you will prefer coding in Java directly to the APIs.  At that stage,
+Selenium IDE will feel more like extra baggage rather than a helping hand.  The
+Selenium IDE scripting language is Turing complete, but it is primitive
+compared to something like Java and the GUI coding interface, while helpful
+initially, will start to feel clunky.  Moreover, the full range of Selenium
+APIs are not represented in the scripting language (not to mention a few
+defects in the subset that it does implement).
+
+This part of the exercise will help you get more familiar with the Selenium API
+and get you started on your journey to be a full Selenium programmer.
+
+### How to export to JUnit for Selenium IDE
+
 Once you are done writing your Selenium test suite, let's try exporting the test
 suite in Selenium IDE to a Java JUnit test class.  
 
@@ -150,13 +184,52 @@ comments.  Leave other boxes unchecked.
 1. Save the resulting file into "RedditCatsTest.java" to the root of the
    exercise 3 directory.
 
-1. You will have to also add this line to the beginning of the @Before
-setUp() method in the generated RedditCatsTest.java file:
+### JUnit set up (Chrome browser specific)
 
-   ```
-   System.setProperty("webdriver.chrome.driver", "Windows/chromedriver.exe");
-   ```
-   Or whatever the path is to your OS compatible chromedriver.  
+If you generated your JUnit file using the Chrome browser Selenium IDE
+extension, you will have to modify it to do some additional set up.
+
+Please add these line(s) to the beginning of the @Before setUp() method in the
+generated RedditCatsTest.java file:
+
+```
+System.setProperty("webdriver.chrome.driver", "Chrome/chromedriver-win32.exe");
+```
+
+If you are not using Windows, replace chromedriver-win32.exe with the webdriver
+compatible with your OS.
+
+Note that the Chrome webdriver only works if you have Chrome version 94
+installed on your computer (the most recent version as of today).  If you have
+a different version of Chrome, you may have to download the appropriate
+webdriver from:
+
+https://chromedriver.chromium.org/downloads
+
+Your Chrome version can be obtained by clicking on the vertical-3-dot menu at
+the top right corner of your browser, then Help > About Google Chrome.
+
+### JUnit set up (Firefox browser specific)
+
+If you generated your JUnit file using the Firefox browser Selenium IDE
+extension, you will have to modify it as well.
+
+Please add these line(s) to the beginning of the @Before setUp() method:
+
+```
+System.setProperty("webdriver.gecko.driver", "Firefox/geckodriver-win64.exe");
+System.setProperty("webdriver.firefox.logfile", "/dev/null");
+```
+
+Again, if you are not using Windows, replace geckodriver-win64.exe with the
+webdriver compatible with your OS.  The second logfile property redirects
+verbose log messages emitted by the Firefox browser to a null device,
+discarding them.  This is done so that those messages don't get interleaved
+with JUnit messages and confuse you.
+
+The Firefox webdriver should work for all recent versions of Firefox.
+
+### Running the JUnit class
 
 You can now run the RedditCatsTest JUnit class using the provided
 [TestRunner.java](TestRunner.java) using one of the following scripts:
@@ -174,41 +247,21 @@ You can now run the RedditCatsTest JUnit class using the provided
 * You can also run your Selenium tests on Eclipse using the "Run JUnit"
   feature, after opening the provided Eclipse project.
 
-Note that the script only works if you have Chrome version 91 installed on your
-computer (the most recent version as of today).  If you have a different
-version of Chrome, you may have to update the chromedriver.exe (or
-chromedriver) in your respective OS folder (Windows / Mac / Linux) by
-downloading a new Chrome Web Driver from:
+If things go properly, you will see the browser pop up repeatedly for each test
+case, perform the actions, and close.  In the command line, you should see "ALL
+TESTS PASSED", which is printed by TestRunner if there are no failures.
 
-https://chromedriver.chromium.org/downloads
+## Tips for JUnit + Selenium problem solving
 
-Your Chrome version can be obtained by clicking on the vertical-3-dot menu at
-the top right corner of your browser, then Help > About Google Chrome.
+1. Often problems that are not apparent in the Selenium IDE commands become
+   apparent in the Java code.  Read the Java code to detect problems.  As I
+mentioned, there are even some defects in the translation process!
 
-If things go properly, you will see the Chrome browser pop up repeatedly for
-each test case, perform the actions, and close.  In the command line, you
-should see "ALL TESTS PASSED", which is printed by TestRunner if there are no
-failures.
+1. There is a quirk with the Reddit website.  The following two websites are very different websites:
+   * https://www.reddit.com/r/cats/  
+   * https://www.reddit.com//r/cats/  
 
-There are multiple reasons why you would want to export to JUnit:
-
-1. You may have a pre-existing testing framework in JUnit (or Python Pytest, or
-   JavaScript Mocha, etc).  And you may want to merge the Selenium IDE testing
-script to the language and framework of your choice.
-
-1. Exporting to JUnit really gives you a good sense of what's happening under
-   the covers (in terms of the actual calls to the WebDriver).  Also, if there
-is a test case that is particularly hard to nail down just by using Selenium
-IDE, you can touch it up in the form of exported Java code.  
-
-1. Selenium IDE also gives the option to export your JUnit test directly to a
-   Selenium Grid which can run the test cases in parallel.  This can allow you
-to utilize a server farm to finish your testing very quickly, although we will
-not explore this option today.
-
-### Tips for JUnit + Selenium problem solving
-
-1. Often problems that are not apparent in the Selenium IDE commands become apparent in the Java code.  Read the Java code to detect problems.
+   You'd be surprised!  Make sure you are accessing the former and not the latter.
 
 1. One common problem with Selenium is that it takes a long time for certain
    web pages or web elements to load and if Selenium proceeds with testing
@@ -249,7 +302,7 @@ remove all calls to setSize in your test cases):
    driver.manage().window().setSize(new Dimension(1200, 800));
    ```
   
-1. Yet another common problem is that some websites have pesky pop up
+1. Yet another common problem is that some websites have pesky pop-up
    windows that prevents the Selenium Web Driver from interacting with the
 website, resulting in test failure.  For example, the reddit.com has a pop
 up window asking whether you want to "Show notifications" for the website
@@ -258,49 +311,80 @@ pop up, the rest of the website is inaccessible.  Once you click on a
 choice, reddit.com will store your choice in a cookie and not ask you on
 subsequent visits.
 
-   When testing with Selenum IDE, the pop up will not occur because most
+   When testing with Selenum IDE, the pop-up will not occur because most
 likely this is not our first visit and as a browser extension, Selenium IDE
 has access to cookies.  However, when testing with the exported JUnit test,
 JUnit launches a standalone web browser instance in its own sandbox so it
 will not have access to pre-existing cookies.  That means the notification
 pop up will occur on the JUnit test every time.
 
-   If you do not want any interference from pop ups during testing, there is
-a simple way to do it.  Replace the following line in the @Before setUp()
-method, replace the following line:
+### How to disable pop-ups (Chrome browser specific)
 
-   ```
-   driver = new ChromeDriver();
-   ```
+If you do not want any interference from pop-ups during testing, there is a
+simple way to do it.  Replace the following line in the @Before setUp() method:
 
-   with the following set of lines:
+```
+driver = new ChromeDriver();
+```
+
+with the following set of lines:
 
 
-   ```
-   ChromeOptions options = new ChromeOptions();
-   options.addArguments("--disable-notifications");
-   driver = new ChromeDriver(options);
-   ```
+```
+ChromeOptions options = new ChromeOptions();
+options.addArguments("--disable-notifications");
+driver = new ChromeDriver(options);
+```
 
-   In order to use ChromeOptions, you will need to import the class at the top:
+In order to use ChromeOptions, you will need to import the class at the top:
 
-   ```
-   import org.openqa.selenium.chrome.ChromeOptions;
-   ```
+```
+import org.openqa.selenium.chrome.ChromeOptions;
+```
 
-   The "Show notifications" pop up is not the only annoying pop up out
+The "Show notifications" pop up is not the only annoying pop up out
 there. Most of us are also familiar with the "Know your location" pop up.
 To disable this one, simply add this line to the above:
 
-   ```
-   options.addArguments("--disable-geolocation");
-   ```
+```
+options.addArguments("--disable-geolocation");
+```
 
-1. Lastly, there is a quirk with the Reddit website that I only found out recently.  The following two websites are very different websites:
-   * https://www.reddit.com/r/cats/  
-   * https://www.reddit.com//r/cats/  
+### How to disable pop-ups (Firefox browser specific)
 
-   You'd be surprised!  Make sure you are accessing the former and not the latter.
+If you do not want pop-ups during testing with Firefox, it.  Replace the
+following line in the @Before setUp() method:
+
+```
+driver = new FirefoxDriver();
+```
+
+with the following set of lines:
+
+
+```
+FirefoxOptions options = new FirefoxOptions();
+options.setProfile(new FirefoxProfile());
+options.addPreference("dom.webnotifications.enabled", false);
+driver = new FirefoxDriver(options);
+```
+
+In order to use FirefoxOptions, you will need to import these at the top:
+
+```
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
+```
+
+In order to disable the "Know your location" geolocation pop up, simply add
+this line to the above changes to FirefoxOptions:
+
+```
+options.addPreference("geo.enabled", false);
+options.addPreference("geo.provider.use_corelocation", false);
+options.addPreference("geo.prompt.testing", false);
+options.addPreference("geo.prompt.testing.allow", false);
+```
 
 ## Submission
 
@@ -351,9 +435,24 @@ options.addArguments("--disable-dev-shm-usage"); // overcome limited resource pr
 driver = new ChromeDriver(options);
 ```
 
+## Groupwork Plan
+
+I suggest that each partner in the group works on this individually.  There is
+only one single file that you will be modifying the Selenium IDE (.side)
+project file, or the RedditCatsTest.java file.  And it would be difficult for
+both of you to work on that single file.  Parallel modifications would result
+in frequent merge conflicts.  When both of you are done, compare your work and
+submit one finalized version to GradeScope.
+
 ## Resources
 
 These links are the same ones posted at the end of the slides:
 
+* Selenium IDE Getting Started:
+https://www.selenium.dev/selenium-ide/docs/en/introduction/getting-started
+
 * Selenium IDE Command Reference:  
 https://www.selenium.dev/selenium-ide/docs/en/api/commands
+
+* Selenium WebDriver Tutorial:
+https://www.selenium.dev/documentation/webdriver/
