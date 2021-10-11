@@ -22,7 +22,7 @@
 
 * DUE: Oct 15 (Friday), 2021 11:59 PM
 
-**GitHub Classroom Link:** TBD
+**GitHub Classroom Link:** https://classroom.github.com/a/oNZlHiDD
 
 ## Desciption
 
@@ -66,20 +66,28 @@ FUN-TITLE: "assert title"
 
 FUN-JOIN-BUTTON-EXISTS - "assert text"
 
-FUN-SIGNUP-LINK - "store attribute" followed by "assert".  You will be storing
-the attribute value to a Selenium variable and asserting on the value of that
-variable.  Now there is a defect in Selenium IDE with the "store attribute"
-command where the target selector button is disabled when it should be enabled.
-A work around is to enter a command such as "assert text" or "click" which
-allows you to use the target selector, fill in the locator string using it, and
-then revert to "store attribute".  As I said, while Selenium web driver is very
-mature, Selenium IDE is a work in progress. :)
+FUN-SIGNUP-LINK - "store attribute" followed by "assert".  You will be
+storing the href attribute value to a Selenium variable and asserting on the
+value of that variable.  Now the target argument for "store attribute" does
+not directly take a locator string.  If you see the Reference tab for the
+command, you will see that it takes <locator string>@<attribute name>
+instead, where the attribute name in this case is "href".  Since the target
+argument is not a locator string, the target selector button is disabled.
+If you want to still use the target selector to at least get the locator
+string part, you will have to do a workaround and enter a command such as
+"assert text" or "click" which allows you to use the target selector, fill
+in the locator string using it, and then revert back to "store attribute".  
 
 FUN-SEARCH-SMELLY-CAT - "assert text"
 
 FUN-RULE-3 - "assert text"
 
-FUN-RULES-10-ITEMS - "assert element present" for the 10th item; "assert element not present" for the locator for the 11th item.
+FUN-RULES-10-ITEMS - "assert element present" for the 10th item, followed by
+a "assert element not present" for the locator for the 11th item.  An
+alternative cleaner method is to use "store xpath count" followed by
+"assert".  The "store xpath count" command lets you store the number of
+xpaths matching the xpath locator into a Selenium variable which you can
+later check with the "assert" command.
 
 **Hint:** If you are really stuck, there is a solution project file [Reddit
 Cats Solution.side](Reddit%20Cats%20Solution.side) that you can open from
