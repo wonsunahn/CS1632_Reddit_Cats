@@ -92,7 +92,7 @@
     }]
   }, {
     "id": "dfbbb429-b517-43e9-b8e4-10106e9b32f5",
-    "name": "FUN-SEARCH-SMELLY-CAT",
+    "name": "FUN-SORT-BY-COMMENTS",
     "commands": [{
       "id": "f00bb971-75dc-49a7-9611-b64f6afe607b",
       "comment": "",
@@ -134,7 +134,7 @@
         ["xpath=//div[@id='SearchDropdown']/form/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "smelly cat"
+      "value": "catnip"
     }, {
       "id": "36875fd5-359e-4262-ac74-bbf85775575a",
       "comment": "",
@@ -150,17 +150,40 @@
       ],
       "value": "${KEY_ENTER}"
     }, {
-      "id": "9ee8aa92-d04e-4319-8913-11d2fc2c95b3",
+      "id": "33b3751e-ddf2-451b-9774-1c6d73a7c9ac",
+      "comment": "",
+      "command": "click",
+      "target": "css=.\\_3yqn7UgWZCfM22Sk-rcBbs:nth-child(1) > .cmR5BF4NpBUm3DBMZCmJS",
+      "targets": [
+        ["css=.\\_3yqn7UgWZCfM22Sk-rcBbs:nth-child(1) > .cmR5BF4NpBUm3DBMZCmJS", "css:finder"],
+        ["xpath=//div[@id='SHORTCUT_FOCUSABLE_DIV']/div[2]/div/div/div/div[2]/div/div/div/div[2]/div/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div/div[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Sort')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "aefd704d-4d7e-42f7-aaff-49747d011906",
+      "comment": "",
+      "command": "click",
+      "target": "css=a:nth-child(5) .\\_2-cXnP74241WI7fpcpfPmg",
+      "targets": [
+        ["css=a:nth-child(5) .\\_2-cXnP74241WI7fpcpfPmg", "css:finder"],
+        ["xpath=//a[5]/button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Most Comments')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "41cab237-1f43-4fb8-afae-83ab6e60e1a6",
       "comment": "",
       "command": "assertText",
-      "target": "xpath=//h3/span",
+      "target": "xpath=//div[3]/span[2]",
       "targets": [
-        ["css=.\\_3j9XjJayuKq7dJ8huVnCuS", "css:finder"],
-        ["xpath=//div[@id='SHORTCUT_FOCUSABLE_DIV']/div[2]/div/div/div/div[2]/div/div/h3/span", "xpath:idRelative"],
-        ["xpath=//h3/span", "xpath:position"],
-        ["xpath=//span[contains(.,'smelly cat')]", "xpath:innerText"]
+        ["css=#t3_rs3bh8 .\\_vaFo96phV6L5Hltvwcox:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='t3_rs3bh8']/div/div/div[3]/span[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'3.1k comments')]", "xpath:innerText"]
       ],
-      "value": "smelly cat"
+      "value": "286 comments"
     }]
   }, {
     "id": "b22588f1-048e-4e1f-a721-8c73130fe4bb",
@@ -193,7 +216,7 @@
     }]
   }, {
     "id": "939ac7d6-9909-47fb-8978-7617fc615ab0",
-    "name": "FUN-RULES-10-ITEMS",
+    "name": "FUN-RULES-11-ITEMS",
     "commands": [{
       "id": "d361834d-bd61-4007-ac6a-765dee158458",
       "comment": "",
@@ -212,7 +235,7 @@
       "id": "daf9dc5e-911e-4685-b680-5e21f6c527d7",
       "comment": "",
       "command": "assertElementPresent",
-      "target": "xpath=//div[2]/div[10]/div/div/div",
+      "target": "xpath=//div[2]/div[11]/div/div/div",
       "targets": [
         ["css=.\\_8ZLJI1-ZiP7pHJ_yO1L4Z:nth-child(11) .\\_36D5hmBSZbFxkFMkiWg6cY", "css:finder"],
         ["xpath=//div[@id='SHORTCUT_FOCUSABLE_DIV']/div[2]/div/div/div/div[2]/div[3]/div[2]/div/div[4]/div/div[2]/div[11]/div/div/div", "xpath:idRelative"],
@@ -223,7 +246,7 @@
       "id": "ef01e907-798a-4b7c-9d79-7064d650423e",
       "comment": "",
       "command": "assertElementNotPresent",
-      "target": "xpath=//div[2]/div[11]/div/div/div",
+      "target": "xpath=//div[2]/div[12]/div/div/div",
       "targets": [],
       "value": ""
     }]

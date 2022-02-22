@@ -20,9 +20,9 @@
 
 # CS 1632 - Software Quality Assurance
 
-* DUE: Oct 15 (Friday), 2021 11:59 PM
+* DUE: Feb 25 (Friday), 2022 11:59 PM
 
-**GitHub Classroom Link:** https://classroom.github.com/a/oNZlHiDD
+**GitHub Classroom Link:** TBD
 
 ## Desciption
 
@@ -36,9 +36,7 @@ It was chosen because it is a nice safe subreddit which is policed pretty well. 
 
 First, let's start by adding the Selenium IDE browser extension for your web
 browser by selecting "Chrome Download" or "Firefox Download" on the below
-website (**Update: the "Chrome Download" option seems to be temporarily
-unavailable in the Chrome web store so you will have to install Firefox and
-then install the extension there.**):
+website:
 
 https://www.selenium.dev/selenium-ide/
 
@@ -70,7 +68,7 @@ FUN-SIGNUP-LINK - "store attribute" followed by "assert".  You will be
 storing the href attribute value to a Selenium variable and asserting on the
 value of that variable.  Now the target argument for "store attribute" does
 not directly take a locator string.  If you see the Reference tab for the
-command, you will see that it takes <locator string>@<attribute name>
+command, you will see that it takes \<locator string\>@\<attribute name\>
 instead, where the attribute name in this case is "href".  Since the target
 argument is not a locator string, the target selector button is disabled.
 If you want to still use the target selector to at least get the locator
@@ -78,12 +76,17 @@ string part, you will have to do a workaround and enter a command such as
 "assert text" or "click" which allows you to use the target selector, fill
 in the locator string using it, and then revert back to "store attribute".  
 
-FUN-SEARCH-SMELLY-CAT - "assert text"
+FUN-SORT-BY-COMMENTS - "assert text".  Please test this feature by searching
+"catnip" on the search box and then sorting by "Most Comments", and then
+verifying that the first comment has "286 comments" by using "assert text".
+This test is dependent on the current state of the reddit database since
+postings and comments are fluid, but let's assume that the database is given as
+a precondition ;).
 
-FUN-RULE-3 - "assert text"
+FUN-RULE-3 - "assert text".
 
-FUN-RULES-10-ITEMS - "assert element present" for the 10th item, followed by
-a "assert element not present" for the locator for the 11th item.  An
+FUN-RULES-11-ITEMS - "assert element present" for the 11th item, followed by
+a "assert element not present" for the locator for the 12th item.  An
 alternative cleaner method is to use "store xpath count" followed by
 "assert".  The "store xpath count" command lets you store the number of
 xpaths matching the xpath locator into a Selenium variable which you can
@@ -107,19 +110,24 @@ to the Target field and the second argument goes to the Value field, regardless
 of command.
 
 1. Sometimes the target component of a test step is the problem.  The selector
-   button tries to generate a **locator string** as best it can using xpath, css
-selector, or id tag.  But it is not fool proof.  The problem is, the web page
-may change ever so slightly on the next page load (e.g. due to a new post, or a
-new comment) and then the locator will stop working.  You will notice that
+   button tries to generate a **locator string** as best it can using xpath,
+css selector, or id tag.  But it is not fool proof.  The problem is, the web
+page may change ever so slightly on the next page load (e.g. due to a new post,
+or a new comment) and then the locator will stop working.  You will notice that
 there is a small down arrow at the end of the target text box.  If you click on
 that arrow, you will see alternative locator strings to the current string.
 Select the one that looks specific enough to be able to point to the target but
 also general enough to not change between page loads.  You do need to try this
-out several times to get a feel of what a good locator string is.  Here is an
-in-depth discussion about locators:  
+out several times to get a feel of what a good locator string is.  Here is a
+list of all the different types of locators available in Selenium:
 
-   https://www.selenium.dev/documentation/en/webdriver/locating_elements/#element-selection-strategies
-   
+   https://www.selenium.dev/documentation/webdriver/elements/locators/   
+
+   Here is an in-depth discussion about how to use these locators to uniquely
+identify a specific element:  
+
+   https://www.selenium.dev/documentation/webdriver/elements/finders/
+
 1. Sometimes you can use an XPATH position locator string to check that an
    element exists at an expected location ("assert element present") or does
 not exist ("assert element not present").  But to do this, you have to select
@@ -154,7 +162,7 @@ There are many reasons why you would want to export to JUnit.
 script to the language and framework of your choice.
 
 1. Exporting to JUnit really gives you a good sense of what's happening under
-   the covers (in terms of the actual calls to the webdriver).  Also, if there
+   the covers (in terms of the actual calls to the web driver).  Also, if there
 is a test case that is particularly hard to nail down just by using Selenium
 IDE, you can touch it up in the form of exported Java code.  
 
@@ -204,13 +212,13 @@ generated RedditCatsTest.java file:
 System.setProperty("webdriver.chrome.driver", "Chrome/chromedriver-win32.exe");
 ```
 
-If you are not using Windows, replace chromedriver-win32.exe with the webdriver
+If you are not using Windows, replace chromedriver-win32.exe with the web driver
 compatible with your OS.
 
-Note that the Chrome webdriver only works if you have Chrome version 94
+Note that the Chrome web driver only works if you have Chrome version 98
 installed on your computer (the most recent version as of today).  If you have
 a different version of Chrome, you may have to download the appropriate
-webdriver from:
+web driver from:
 
 https://chromedriver.chromium.org/downloads
 
@@ -230,12 +238,12 @@ System.setProperty("webdriver.firefox.logfile", "/dev/null");
 ```
 
 Again, if you are not using Windows, replace geckodriver-win64.exe with the
-webdriver compatible with your OS.  The second logfile property redirects
+web driver compatible with your OS.  The second logfile property redirects
 verbose log messages emitted by the Firefox browser to a null device,
 discarding them.  This is done so that those messages don't get interleaved
 with JUnit messages and confuse you.
 
-The Firefox webdriver should work for all recent versions of Firefox.
+The Firefox web driver should work for all recent versions of Firefox.
 
 ### Running the JUnit class
 
@@ -261,29 +269,40 @@ TESTS PASSED", which is printed by TestRunner if there are no failures.
 
 ## Tips for JUnit + Selenium problem solving
 
-1. Often problems that are not apparent in the Selenium IDE commands become
-   apparent in the Java code.  Read the Java code to detect problems.  As I
-mentioned, there are even some defects in the translation process!
+**Do not expect the generated JUnit code to work out of the box.**  The IDE
+does not do a perfect job in doing a translation, which suites this classroom
+because massaging the code to make it work will force you to read Selenium code
+and get used to the APIs.  The IDE is more of a starter tool, and you will be
+coding against the web driver APIs when you become an expert.
 
-1. There is a quirk with the Reddit website.  The following two websites are very different websites:
-   * https://www.reddit.com/r/cats/  
-   * https://www.reddit.com//r/cats/  
+1. One big headache with Selenium is that there is an inherent **race
+   condition** in the way it works.  There are three components to this
+distributed system: the web browser that renders the web page and runs
+JavaScript, the web server that sends web data to the web browser
+intermittently, and the web driver that sends commands to the web browser to
+control its actions.  These three components will not synchronize with each
+other unless you tell them to and events (such as page loads from web server,
+DOM element rendering by the web browser, and commands from the web driver) can
+happen in arbitrary order.  For example, your web browser may not have finished
+rendering a button before your web driver sends a command to click on it.  This
+leads to nondeterminism and unreproducible testing.
 
-   You'd be surprised!  Make sure you are accessing the former and not the latter.
+   Fortunately, Selenium does provide you with a long list of synchronization
+APIs that allow you to wait for a particular event to happen.  Details about
+the different types of wait APIs available on Selenium are described in:
 
-1. One common problem with Selenium is that it takes a long time for certain
-   web pages or web elements to load and if Selenium proceeds with testing
-immediately after opening a page, the tests will fail.  So Selenium provides
-APIs to allow you to wait until an event happens (e.g. the element is
-loaded).  All the details about which APIs to use on which situations is in
-the page:
-
-   https://www.selenium.dev/documentation/en/webdriver/waits/
+   https://www.selenium.dev/documentation/webdriver/waits/
    
-   For your purposes, an implicit wait setting at the beginning should be enough.  Insert the following line in the @Before setUp() method:
+   Most of the time, setting an **implicit wait** at the beginning is enough to
+solve most race conditions.  It ensures that the web driver implicitly waits
+for the given amount of time for a target element to be rendered when sending
+any command, before flagging a failure. It is flexible in that it will only
+wait the given amount of time if the element does not load quickly, and will
+proceed immediately if it does.  Insert the following line in the @Before
+setUp() method:
 
    ```
-   driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+   driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
    ```
 
    In order to use that line, you will need to also import this library:
@@ -292,12 +311,43 @@ the page:
    import java.util.concurrent.TimeUnit;
    ```
 
-   What that does is: for every step, if the corresponding element is
-missing, it inserts an implicit wait of 10 seconds before signaling a
-failure.  Selenium IDE internally uses an implicit wait time of 30 seconds
+   Selenium IDE internally uses an implicit wait time of 30 seconds
 when running a script, but when it exports the script to the JUnit test, it
 fails to insert that implicit wait in the @Before setUp() method.  So if you
 want one, you need to insert it yourself.
+
+   Sometimes, you may have to synchronize on events other than an element
+getting rendered.  For that, you will have to do an **explicit wait** on that
+event.  Here is an exhaustive list of events that you can wait on:
+
+   https://www.selenium.dev/selenium/docs/api/java/org/openqa/selenium/support/ui/ExpectedConditions.html
+
+   In some rare cases, the event that you want to wait on is not in the list of
+events that Selenium supports.  In that case, you have no choice but to insert
+an arbitrary wait on your own:
+
+   ```
+   try {
+     Thread.sleep(3000);
+   } catch (InterruptedException e) {
+   }
+   ```
+
+   The above code will insert an arbitrary delay of 3000 ms (3 seconds) in your
+web driver at the place of insertion.  It is arbitrary because there is no
+guarantee that the event you are waiting for will happen within 3 seconds ---
+we just hope that it does.  And the catch is, we cannot wait for too long
+either because it will slow down testing.
+
+   **You may have to insert the above sleep code in your web driver when you
+test FUN-SORT-BY-COMMENT, between the command to type "catnip" and the command
+to pressing <Enter>.**  There is a race condition here because when you type
+"catnip" in the search box, a drop down menu with a list of suggestions
+appears, during which the search box is not responsive to user key strokes.  If
+the <Enter> key stroke arrives when the search box is in this state, the key
+stroke will be ignored.  Waiting for about 3 seconds makes it highly likely
+that the key stroke arrives after this brief period of time when the box is
+unresponsive.
 
 1. Another common problem is that depending on the browser window size,
    certain elements may disappear.  For example, the Reddit site would hide
@@ -424,24 +474,46 @@ of your tests should pass.
 1. **RedditCatsTest on https://www.reddit.com/r/dogs**: This tests your
    RedditCatsTest.java file on the dogs subreddit, repeating the same steps but
 for a different webpage.  Now some tests should pass but some should fail.
-Specifically, FUN-JOIN-BUTTON-EXISTS and FUN-SEARCH-SMELLY-CAT should pass and
+Specifically, FUN-JOIN-BUTTON-EXISTS and FUN-SEARCH-MEOW should pass and
 the rest shold fail.
 
 You may be curious how I was able to run the tests on the GradeScope docker
 images when they most likely don't have displays to render the Chrome browser.
-The Chrome webdriver, as well as other webdrivers, can be run in "headless"
+The Chrome web driver, as well as other web drivers, can be run in "headless"
 mode.  That is, the tests can be performed inside the web engine without having
-to actually display the page.  This is very common practice since in a work
-setting, testers will be running tests on server machines or even on the cloud
-in docker images like I did.  If you need to do this in the future, you can
-achieve this by passing options when creating the Chrome webdriver:
+to actually display the page.  This is common practice since in a work setting,
+testers will be running tests on server machines or even on the cloud in Docker
+images like I did.  If you need to do this in the future, you can achieve this
+by passing additional options when creating the Chrome web driver:
 
 ```
-ChromeOptions options = new ChromeOptions();
-options.addArguments("--headless");
-options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
-driver = new ChromeDriver(options);
+options.addArguments("--headless");			// Enable running without a display
+options.addArguments("--disable-dev-shm-usage");	// Disable /dev/shm which is limited to 64MB in Docker and use /tmp/ instead to store shared memory files
 ```
+
+I add the above options by replacing the setUp() method in RedditCatsTest.java
+with my own version that looks like the following:
+
+```
+@Before
+public void setUp() {
+    System.setProperty("webdriver.chrome.driver", "Linux/chromedriver");
+    ChromeOptions options = new ChromeOptions();
+    options.addArguments("--headless");			// Enable running without a display
+    options.addArguments("--disable-dev-shm-usage");	// Disable /dev/shm which is limited to 64MB in Docker and use /tmp/ instead to store shared memory files
+    options.addArguments("--no-sandbox");		// A quick and dirty way to run Selenium as root, bypassing the OS security model
+    driver = new ChromeDriver(options);
+    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    driver.manage().window().setSize(new Dimension(1200, 800));
+    js = (JavascriptExecutor) driver;
+    vars = new HashMap<String, Object>();
+}
+```
+
+**Note: Please do not add any setup code other than the ones shown above
+because they will be replaced by GradeScope.  Also, please do not mess with the
+beginning of the method declaration "public void setUp() {" since it is used
+for pattern detection in GradeScope to replace the method.**
 
 ## Groupwork Plan
 
