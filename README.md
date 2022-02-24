@@ -1,5 +1,5 @@
 - [CS 1632 - Software Quality Assurance](#cs-1632---software-quality-assurance)
-  * [Desciption](#desciption)
+  * [Description](#description)
   * [Task 1: Write test cases](#task-1-write-test-cases)
     + [Tips for Writing assertions for each Test](#tips-for-writing-assertions-for-each-test)
     + [Other Tips](#other-tips)
@@ -17,14 +17,17 @@
   * [GradeScope Feedback](#gradescope-feedback)
   * [Groupwork Plan](#groupwork-plan)
   * [Resources](#resources)
+  * [Extra Credit](#extra-credit)
+    + [Description](#description)
+    + [Submission](#submission)
 
 # CS 1632 - Software Quality Assurance
 
 * DUE: Feb 25 (Friday), 2022 11:59 PM
 
-**GitHub Classroom Link:** TBD
+**GitHub Classroom Link:** https://classroom.github.com/a/SaTLFCIy
 
-## Desciption
+## Description
 
 For this assignment, you and a partner will write a systems-level, automated
 black-box tests for the Reddit website using the Selenium IDE.  Specifically,
@@ -86,11 +89,7 @@ a precondition ;).
 FUN-RULE-3 - "assert text".
 
 FUN-RULES-11-ITEMS - "assert element present" for the 11th item, followed by
-a "assert element not present" for the locator for the 12th item.  An
-alternative cleaner method is to use "store xpath count" followed by
-"assert".  The "store xpath count" command lets you store the number of
-xpaths matching the xpath locator into a Selenium variable which you can
-later check with the "assert" command.
+a "assert element not present" for the locator for the 12th item.  
 
 **Hint:** If you are really stuck, there is a solution project file [Reddit
 Cats Solution.side](Reddit%20Cats%20Solution.side) that you can open from
@@ -147,7 +146,7 @@ the Target field.
 the below figure.  Press on the "Select" button.
 
    <img alt="Test Suite" src=test-suite-selection.png width=700>
-   
+
 1. Click on the "Save project" button on the top right corner that looks like a
    floppy disk.  Save to file name "Reddit Cats.side" in the exercise root folder.
 
@@ -292,7 +291,7 @@ APIs that allow you to wait for a particular event to happen.  Details about
 the different types of wait APIs available on Selenium are described in:
 
    https://www.selenium.dev/documentation/webdriver/waits/
-   
+
    Most of the time, setting an **implicit wait** at the beginning is enough to
 solve most race conditions.  It ensures that the web driver implicitly waits
 for the given amount of time for a target element to be rendered when sending
@@ -359,7 +358,7 @@ remove all calls to setSize in your test cases):
    ```
    driver.manage().window().setSize(new Dimension(1200, 800));
    ```
-  
+
 1. Yet another common problem is that some websites have pesky pop-up
    windows that prevents the Selenium Web Driver from interacting with the
 website, resulting in test failure.  For example, the reddit.com has a pop
@@ -451,10 +450,10 @@ submitting member must use the "View or edit group" link at the top-right
 corner of the assignment page after submission to add his/her partner.  
 
 Submit the repository created by GitHub Classroom for your team to GradeScope
-at the **Exercise 3 GitHub** link.  Make sure you the files "Reddit Cats.side"
-and "RedditCatsTest.java" are in your submission.  Once you submit, GradeScope
-will run the autograder to grade you and give feedback.  If you get deductions,
-fix your code based on the feedback and resubmit.  Repeat until you don't get
+at the **Exercise 3 GitHub** link.  Make sure the files "Reddit Cats.side" and
+"RedditCatsTest.java" are in your submission.  Once you submit, GradeScope will
+run the autograder to grade you and give feedback.  If you get deductions, fix
+your code based on the feedback and resubmit.  Repeat until you don't get
 deductions.
 
 My solution test cases are stored as the [Reddit Cats
@@ -536,3 +535,36 @@ https://www.selenium.dev/selenium-ide/docs/en/api/commands
 
 * Selenium WebDriver Tutorial:
 https://www.selenium.dev/documentation/webdriver/
+
+## Extra Credit
+
+DUE: Mar 15 (Tuesday), 2022 1:00 PM
+
+### Description
+
+This extra credit is going to be 0.5 points out of 100 points for the entire
+course, for anyone who is able to do this.
+
+Previously, the suggested method for testing FUN-RULES-11-ITEMS was to use
+"assert element present" for the 11th item, followed by a "assert element not
+present" for the 12th item.  
+
+Admittedly, this is clunky.  It would be much cleaner if we could count the
+number elements directly and verify that it is 11.
+
+The Selenium IDE command "store xpath count" allows you to count the number of
+elements that matches an xpath and store it inside a Selenium variable.  You
+can later verify the value of the variable using the "assert" command.  Now,
+you will not be able to acquire that xpath using the target selector button in
+the IDE.  You will have to inspect the element on your web browser and come up
+with a pattern than can match all 11 items in that list.  You may have to do a
+little bit of your own research on how xpaths work on Selenium using the
+resources provided above.
+
+### Submission
+
+Please do a group submission, like the exercise.  Submit the same repository
+that you submitted for the exercise at the **Exercise 3 Extra Credit** link.
+You should get a full score on the autograder and have used "store xpath count"
+to get credit.  Make sure the files "Reddit Cats.side" and
+"RedditCatsTest.java" are in your submission.  
