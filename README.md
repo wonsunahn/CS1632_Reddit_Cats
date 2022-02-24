@@ -146,7 +146,7 @@ the Target field.
 the below figure.  Press on the "Select" button.
 
    <img alt="Test Suite" src=test-suite-selection.png width=700>
-
+   
 1. Click on the "Save project" button on the top right corner that looks like a
    floppy disk.  Save to file name "Reddit Cats.side" in the exercise root folder.
 
@@ -291,7 +291,7 @@ APIs that allow you to wait for a particular event to happen.  Details about
 the different types of wait APIs available on Selenium are described in:
 
    https://www.selenium.dev/documentation/webdriver/waits/
-
+   
    Most of the time, setting an **implicit wait** at the beginning is enough to
 solve most race conditions.  It ensures that the web driver implicitly waits
 for the given amount of time for a target element to be rendered when sending
@@ -358,7 +358,7 @@ remove all calls to setSize in your test cases):
    ```
    driver.manage().window().setSize(new Dimension(1200, 800));
    ```
-
+  
 1. Yet another common problem is that some websites have pesky pop-up
    windows that prevents the Selenium Web Driver from interacting with the
 website, resulting in test failure.  For example, the reddit.com has a pop
