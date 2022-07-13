@@ -183,7 +183,7 @@
         ["xpath=//div[3]/span[2]", "xpath:position"],
         ["xpath=//span[contains(.,'3.1k comments')]", "xpath:innerText"]
       ],
-      "value": "286 comments"
+      "value": "285 comments"
     }]
   }, {
     "id": "b22588f1-048e-4e1f-a721-8c73130fe4bb",
@@ -216,7 +216,7 @@
     }]
   }, {
     "id": "939ac7d6-9909-47fb-8978-7617fc615ab0",
-    "name": "FUN-RULES-11-ITEMS",
+    "name": "FUN-RULES-12-ITEMS",
     "commands": [{
       "id": "d361834d-bd61-4007-ac6a-765dee158458",
       "comment": "",
@@ -235,7 +235,7 @@
       "id": "daf9dc5e-911e-4685-b680-5e21f6c527d7",
       "comment": "",
       "command": "assertElementPresent",
-      "target": "xpath=//div[2]/div[11]/div/div/div",
+      "target": "xpath=//div[2]/div[12]/div/div/div",
       "targets": [
         ["css=.\\_8ZLJI1-ZiP7pHJ_yO1L4Z:nth-child(11) .\\_36D5hmBSZbFxkFMkiWg6cY", "css:finder"],
         ["xpath=//div[@id='SHORTCUT_FOCUSABLE_DIV']/div[2]/div/div/div/div[2]/div[3]/div[2]/div/div[4]/div/div[2]/div[11]/div/div/div", "xpath:idRelative"],
@@ -246,7 +246,7 @@
       "id": "ef01e907-798a-4b7c-9d79-7064d650423e",
       "comment": "",
       "command": "assertElementNotPresent",
-      "target": "xpath=//div[2]/div[12]/div/div/div",
+      "target": "xpath=//div[2]/div[13]/div/div/div",
       "targets": [],
       "value": ""
     }]

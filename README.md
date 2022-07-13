@@ -7,25 +7,25 @@
   * [Task 3: Export test suite to JUnit class](#task-3-export-test-suite-to-junit-class)
     + [Why export to a JUnit class?](#why-export-to-a-junit-class-)
     + [How to export to JUnit for Selenium IDE](#how-to-export-to-junit-for-selenium-ide)
-    + [JUnit set up (Chrome browser specific)](#junit-set-up-chrome-browser-specific)
-    + [JUnit set up (Firefox browser specific)](#junit-set-up-firefox-browser-specific)
+    + [JUnit set up (Chrome browser specific)](#junit-set-up-chrome-browser-specific-)
+    + [JUnit set up (Firefox browser specific)](#junit-set-up-firefox-browser-specific-)
     + [Running the JUnit class](#running-the-junit-class)
-  * [Tips for JUnit + Selenium problem solving](#tips-for-junit--selenium-problem-solving)
-    + [How to disable pop-ups (Chrome browser specific)](#how-to-disable-pop-ups-chrome-browser-specific)
-    + [How to disable pop-ups (Firefox browser specific)](#how-to-disable-pop-ups-firefox-browser-specific)
-  * [Submission](#submission)
-  * [GradeScope Feedback](#gradescope-feedback)
-  * [Groupwork Plan](#groupwork-plan)
-  * [Resources](#resources)
-  * [Extra Credit](#extra-credit)
-    + [Description](#description)
-    + [Submission](#submission)
+  * [Tips for JUnit + Selenium problem solving](#tips-for-junit---selenium-problem-solving)
+    + [How to disable pop-ups (Chrome browser specific)](#how-to-disable-pop-ups-chrome-browser-specific-)
+    + [How to disable pop-ups (Firefox browser specific)](#how-to-disable-pop-ups-firefox-browser-specific-)
+- [Submission](#submission)
+- [GradeScope Feedback](#gradescope-feedback)
+- [Groupwork Plan](#groupwork-plan)
+- [Resources](#resources)
+- [Extra Credit](#extra-credit)
+  * [Description](#description-1)
+  * [Submission](#submission-1)
 
 # CS 1632 - Software Quality Assurance
 
-* DUE: Feb 25 (Friday), 2022 11:59 PM
+* DUE: July 19 (Tuesday), 2022 11:30 AM
 
-**GitHub Classroom Link:** https://classroom.github.com/a/SaTLFCIy
+**GitHub Classroom Link:** TBD
 
 ## Description
 
@@ -81,15 +81,15 @@ in the locator string using it, and then revert back to "store attribute".
 
 FUN-SORT-BY-COMMENTS - "assert text".  Please test this feature by searching
 "catnip" on the search box and then sorting by "Most Comments", and then
-verifying that the first comment has "286 comments" by using "assert text".
+verifying that the first comment has "285 comments" by using "assert text".
 This test is dependent on the current state of the reddit database since
 postings and comments are fluid, but let's assume that the database is given as
 a precondition ;).
 
 FUN-RULE-3 - "assert text".
 
-FUN-RULES-11-ITEMS - "assert element present" for the 11th item, followed by
-a "assert element not present" for the locator for the 12th item.  
+FUN-RULES-12-ITEMS - "assert element present" for the 12th item, followed by
+a "assert element not present" for the locator for the 13th item.  
 
 **Hint:** If you are really stuck, there is a solution project file [Reddit
 Cats Solution.side](Reddit%20Cats%20Solution.side) that you can open from
@@ -256,15 +256,38 @@ You can now run the RedditCatsTest JUnit class using the provided
 
 * If you are running Mac or Linux:
    ```
-   run.sh
+   bash run.sh
    ```
 
 * You can also run your Selenium tests on Eclipse using the "Run JUnit"
   feature, after opening the provided Eclipse project.
 
 If things go properly, you will see the browser pop up repeatedly for each test
-case, perform the actions, and close.  In the command line, you should see "ALL
-TESTS PASSED", which is printed by TestRunner if there are no failures.
+case, perform the actions, and close.  In the command line, you should see:
+
+```
+...
+ALL TESTS PASSED
+```
+
+The line is printed by TestRunner.java if there are no failures.
+
+If you have one or more failed tests, you will see the following line in the end:
+
+```
+...
+!!! - At least one failure, see above.
+```
+
+Please search the output for specific test failures that look like the below:
+
+```
+...
+fUNSORTBYCOMMENTS(RedditCatsTest): no such element: Unable to locate element: {"method":"css selector","selector":".\_3yqn7UgWZCfM22Sk-rcBbs:nth-child(1) > .cmR5BF4NpBUm3DBMZCmJS"}
+...
+```
+
+Then, modify each test case that fails using tips listed in the next section.
 
 ## Tips for JUnit + Selenium problem solving
 
@@ -340,7 +363,7 @@ either because it will slow down testing.
 
    **You may have to insert the above sleep code in your web driver when you
 test FUN-SORT-BY-COMMENT, between the command to type "catnip" and the command
-to pressing <Enter>.**  There is a race condition here because when you type
+to pressing [Enter].**  There is a race condition here because when you type
 "catnip" in the search box, a drop down menu with a list of suggestions
 appears, during which the search box is not responsive to user key strokes.  If
 the <Enter> key stroke arrives when the search box is in this state, the key
@@ -443,7 +466,7 @@ options.addPreference("geo.prompt.testing", false);
 options.addPreference("geo.prompt.testing.allow", false);
 ```
 
-## Submission
+# Submission
 
 Each pairwise group will do one submission to GradeScope as usual.  The
 submitting member must use the "View or edit group" link at the top-right
@@ -462,7 +485,7 @@ with your test cases (this is not the only way to implement the test cases).
 It is in JSON format so you should be able to open it with a text editor and
 trace it with your eyes, if that's what you prefer.
 
-## GradeScope Feedback
+# GradeScope Feedback
 
 The GradeScope autograder works in 2 phases:
 
@@ -514,7 +537,7 @@ because they will be replaced by GradeScope.  Also, please do not mess with the
 beginning of the method declaration "public void setUp() {" since it is used
 for pattern detection in GradeScope to replace the method.**
 
-## Groupwork Plan
+# Groupwork Plan
 
 I suggest that each partner in the group works on this individually.  There is
 only one single file that you will be modifying the Selenium IDE (.side)
@@ -523,7 +546,7 @@ both of you to work on that single file.  Parallel modifications would result
 in frequent merge conflicts.  When both of you are done, compare your work and
 submit one finalized version to GradeScope.
 
-## Resources
+# Resources
 
 These links are the same ones posted at the end of the slides:
 
@@ -536,32 +559,32 @@ https://www.selenium.dev/selenium-ide/docs/en/api/commands
 * Selenium WebDriver Tutorial:
 https://www.selenium.dev/documentation/webdriver/
 
-## Extra Credit
+# Extra Credit
 
-DUE: Mar 15 (Tuesday), 2022 1:00 PM
+DUE: July 26 (Tuesday), 2022 11:30 AM
 
-### Description
+## Description
 
 This extra credit is going to be 0.5 points out of 100 points for the entire
 course, for anyone who is able to do this.
 
-Previously, the suggested method for testing FUN-RULES-11-ITEMS was to use
-"assert element present" for the 11th item, followed by a "assert element not
-present" for the 12th item.  
+Previously, the suggested method for testing FUN-RULES-12-ITEMS was to use
+"assert element present" for the 12th item, followed by a "assert element not
+present" for the 13th item.  
 
 Admittedly, this is clunky.  It would be much cleaner if we could count the
-number elements directly and verify that it is 11.
+number elements directly and verify that it is 12.
 
 The Selenium IDE command "store xpath count" allows you to count the number of
 elements that matches an xpath and store it inside a Selenium variable.  You
 can later verify the value of the variable using the "assert" command.  Now,
 you will not be able to acquire that xpath using the target selector button in
 the IDE.  You will have to inspect the element on your web browser and come up
-with a pattern than can match all 11 items in that list.  You may have to do a
+with a pattern than can match all 12 items in that list.  You may have to do a
 little bit of your own research on how xpaths work on Selenium using the
 resources provided above.
 
-### Submission
+## Submission
 
 Please do a group submission, like the exercise.  Submit the same repository
 that you submitted for the exercise at the **Exercise 3 Extra Credit** link.

@@ -8,4 +8,4 @@ FUN-SORT-BY-COMMENTS - After searching a string at the top search box, the next 
 
 FUN-RULE-3 - The page shall display a set of R/Cats Rules of which the 3rd is: "No NSFW, animal abuse, or cruelty".  The rules box is located in the bottom right corner.
 
-FUN-RULES-11-ITEMS - The R/Cats Rules should have exactly 11 items.
+FUN-RULES-12-ITEMS - The R/Cats Rules should have exactly 12 items.
