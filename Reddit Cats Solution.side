@@ -176,12 +176,12 @@
       "id": "41cab237-1f43-4fb8-afae-83ab6e60e1a6",
       "comment": "",
       "command": "assertText",
-      "target": "xpath=//div[3]/span[2]",
+      "target": "xpath=//div[4]/span[2]",
       "targets": [
-        ["css=#t3_rs3bh8 .\\_vaFo96phV6L5Hltvwcox:nth-child(2)", "css:finder"],
-        ["xpath=//div[@id='t3_rs3bh8']/div/div/div[3]/span[2]", "xpath:idRelative"],
-        ["xpath=//div[3]/span[2]", "xpath:position"],
-        ["xpath=//span[contains(.,'3.1k comments')]", "xpath:innerText"]
+        ["css=#t3_ajbx5n .\\_vaFo96phV6L5Hltvwcox:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='t3_ajbx5n']/div/div/div[4]/span[2]", "xpath:idRelative"],
+        ["xpath=//div[4]/span[2]", "xpath:position"],
+        ["xpath=//span[contains(.,'285 comments')]", "xpath:innerText"]
       ],
       "value": "285 comments"
     }]
