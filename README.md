@@ -23,9 +23,9 @@
 
 # CS 1632 - Software Quality Assurance
 
-* DUE: July 19 (Tuesday), 2022 11:30 AM
+* DUE: September 30 (Friday), 2022 11:59 PM
 
-**GitHub Classroom Link:** https://classroom.github.com/a/QLZl5L-l
+**GitHub Classroom Link:** TBD
 
 ## Description
 
