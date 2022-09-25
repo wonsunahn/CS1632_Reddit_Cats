@@ -538,10 +538,8 @@ public void setUp() {
 }
 ```
 
-**Note: Please do not add any setup code other than the ones shown above
-because they will be replaced by GradeScope.  Also, please do not mess with the
-beginning of the method declaration "public void setUp() {" since it is used
-for pattern detection in GradeScope to replace the method.**
+**Note: Please do not mess with the method declaration "public void setUp() {"
+since it is used for pattern detection in GradeScope to replace the method.**
 
 # Groupwork Plan
 
@@ -567,11 +565,11 @@ https://www.selenium.dev/documentation/webdriver/
 
 # Extra Credit
 
-DUE: July 26 (Tuesday), 2022 11:30 AM
+DUE: October 17 (Monday), 2022 before start of class
 
 ## Description
 
-This extra credit is going to be 0.5 points out of 100 points for the entire
+This extra credit is going to be 0.2 points out of 100 points for the entire
 course, for anyone who is able to do this.
 
 Previously, the suggested method for testing FUN-RULES-12-ITEMS was to use
@@ -586,9 +584,21 @@ elements that matches an xpath and store it inside a Selenium variable.  You
 can later verify the value of the variable using the "assert" command.  Now,
 you will not be able to acquire that xpath using the target selector button in
 the IDE.  You will have to inspect the element on your web browser and come up
-with a pattern than can match all 12 items in that list.  You may have to do a
-little bit of your own research on how xpaths work on Selenium using the
-resources provided above.
+with a pattern than can match all 12 items in that list.  On both the Chrome
+and Firefox browsers, when you right click on an HTML element to bring up the
+context menu, there is an "Inspect" menu.  Clicking on the "Inspect" menu
+brings up Inspector view.  When you right click on the highlighted element
+again, there is a "Copy" menu on the context menu.  This allows you to copy the
+XPath of the given element.
+
+You will have to do a little bit of your own research on xpaths to figure out
+what actual XPath to pass to the "store xpath count" command.  You can read the
+[official W3C specification](https://www.w3.org/TR/xpath/).
+
+But just like most specifications, it is focused on exact specification rather
+than readability.  You will find this unofficial tutorial using examples more
+digestible: https://www.w3schools.com/xml/xpath_intro.asp.
+
 
 ## Submission
 
