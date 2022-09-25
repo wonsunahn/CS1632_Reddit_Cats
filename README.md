@@ -251,7 +251,18 @@ The Firefox web driver should work for all recent versions of Firefox.
 
 ### Running the JUnit class
 
-As before, please invoke the Maven test phase:
+Before starting, let me warn you that your RedditCatsTest.java JUnit test class
+is **not going to work**, even after having made the above changes to designate
+the webdriver path.  That is because making Selenium work on websites requires
+some [massaging](#tips-for-junit--selenium-problem-solving) and the Selenium
+IDE code generation just takes you halfway there.  Moreover, Selenium IDE will
+sometimes generate code which is flat out incorrect (one glaring example is
+switching the locations of the expected and observed values in assertEquals
+assertions).  Which is just fine because this is going to be a learning
+opportunity for you to solve these problems and gain a deeper understanding of
+Selenium Web Driver API.
+
+With full expectation with things will fail, let's invoke the Maven test phase:
 ```
 mvn test
 ```
@@ -271,7 +282,7 @@ Tests run: 6, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 ```
 
-If you have one or more failed tests, you will see something like this:
+Most likely, you will see one or more failed tests, such as this:
 
 ```
 ...
