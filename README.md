@@ -496,12 +496,6 @@ run the autograder to grade you and give feedback.  If you get deductions, fix
 your code based on the feedback and resubmit.  Repeat until you don't get
 deductions.
 
-My solution test cases are stored as the [Reddit Cats
-Solution.side](Reddit%20Cats%20Solution.side) file afore mentioned.  Compare
-with your test cases (this is not the only way to implement the test cases).
-It is in JSON format so you should be able to open it with a text editor and
-trace it with your eyes, if that's what you prefer.
-
 # GradeScope Feedback
 
 The GradeScope autograder works in 2 phases:
