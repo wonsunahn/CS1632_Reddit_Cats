@@ -485,7 +485,7 @@ options.addPreference("geo.prompt.testing.allow", false);
 
 # Submission
 
-Each pairwise group will do one submission to GradeScope as usual.  The
+Each pairwise group will do a group submission to GradeScope as usual.  The
 submitting member must use the "View or edit group" link at the top-right
 corner of the assignment page after submission to add his/her partner.  
 
@@ -548,7 +548,8 @@ since it is used for pattern detection in GradeScope to replace the method.**
 
 # Groupwork Plan
 
-I suggest that each partner in the group works on this individually.  There is
+I want each member in the group to work on this individually and that is why I
+created individual repositories in GitHub Classroom.  Practically, there is
 only one single file that you will be modifying the Selenium IDE (.side)
 project file, or the RedditCatsTest.java file.  And it would be difficult for
 both of you to work on that single file.  Parallel modifications would result
