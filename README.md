@@ -25,7 +25,7 @@
 
 * DUE: September 30 (Friday), 2022 11:59 PM
 
-**GitHub Classroom Link:** TBD
+**GitHub Classroom Link:** https://classroom.github.com/a/Y_8ZHDtn
 
 ## Description
 
@@ -90,10 +90,6 @@ FUN-RULE-3 - "assert text".
 
 FUN-RULES-12-ITEMS - "assert element present" for the 12th item, followed by
 a "assert element not present" for the locator for the 13th item.  
-
-**Hint:** If you are really stuck, there is a solution project file [Reddit
-Cats Solution.side](Reddit%20Cats%20Solution.side) that you can open from
-Selenium IDE.  Take a peek but don't loiter!
 
 ### Other Tips
 
