@@ -1,30 +1,33 @@
 - [CS 1632 - Software Quality Assurance](#cs-1632---software-quality-assurance)
-  * [Desciption](#desciption)
+  * [Description](#description)
   * [Task 1: Write test cases](#task-1-write-test-cases)
     + [Tips for Writing assertions for each Test](#tips-for-writing-assertions-for-each-test)
     + [Other Tips](#other-tips)
   * [Task 2: Add test cases to test suite and save project](#task-2-add-test-cases-to-test-suite-and-save-project)
   * [Task 3: Export test suite to JUnit class](#task-3-export-test-suite-to-junit-class)
-    + [Why export to a JUnit class?](#why-export-to-a-junit-class-)
+    + [Why export to a JUnit class?](#why-export-to-a-junit-class)
     + [How to export to JUnit for Selenium IDE](#how-to-export-to-junit-for-selenium-ide)
-    + [JUnit set up (Chrome browser specific)](#junit-set-up-chrome-browser-specific)
-    + [JUnit set up (Firefox browser specific)](#junit-set-up-firefox-browser-specific)
+    + [JUnit set up (Chrome browser specific)](#junit-set-up-chrome-browser-specific-)
+    + [JUnit set up (Firefox browser specific)](#junit-set-up-firefox-browser-specific-)
     + [Running the JUnit class](#running-the-junit-class)
   * [Tips for JUnit + Selenium problem solving](#tips-for-junit--selenium-problem-solving)
     + [How to disable pop-ups (Chrome browser specific)](#how-to-disable-pop-ups-chrome-browser-specific)
     + [How to disable pop-ups (Firefox browser specific)](#how-to-disable-pop-ups-firefox-browser-specific)
-  * [Submission](#submission)
-  * [GradeScope Feedback](#gradescope-feedback)
-  * [Groupwork Plan](#groupwork-plan)
-  * [Resources](#resources)
+- [Submission](#submission)
+- [GradeScope Feedback](#gradescope-feedback)
+- [Groupwork Plan](#groupwork-plan)
+- [Resources](#resources)
+- [Extra Credit](#extra-credit)
+  * [Description](#description-1)
+  * [Submission](#submission-1)
 
 # CS 1632 - Software Quality Assurance
 
-* DUE: Feb 25 (Friday), 2022 11:59 PM
+* DUE: September 30 (Friday), 2022 11:59 PM
 
-**GitHub Classroom Link:** TBD
+**GitHub Classroom Link:** https://classroom.github.com/a/Y_8ZHDtn
 
-## Desciption
+## Description
 
 For this assignment, you and a partner will write a systems-level, automated
 black-box tests for the Reddit website using the Selenium IDE.  Specifically,
@@ -78,23 +81,15 @@ in the locator string using it, and then revert back to "store attribute".
 
 FUN-SORT-BY-COMMENTS - "assert text".  Please test this feature by searching
 "catnip" on the search box and then sorting by "Most Comments", and then
-verifying that the first comment has "286 comments" by using "assert text".
+verifying that the first comment has "285 comments" by using "assert text".
 This test is dependent on the current state of the reddit database since
 postings and comments are fluid, but let's assume that the database is given as
 a precondition ;).
 
 FUN-RULE-3 - "assert text".
 
-FUN-RULES-11-ITEMS - "assert element present" for the 11th item, followed by
-a "assert element not present" for the locator for the 12th item.  An
-alternative cleaner method is to use "store xpath count" followed by
-"assert".  The "store xpath count" command lets you store the number of
-xpaths matching the xpath locator into a Selenium variable which you can
-later check with the "assert" command.
-
-**Hint:** If you are really stuck, there is a solution project file [Reddit
-Cats Solution.side](Reddit%20Cats%20Solution.side) that you can open from
-Selenium IDE.  Take a peek but don't loiter!
+FUN-RULES-12-ITEMS - "assert element present" for the 12th item, followed by
+a "assert element not present" for the locator for the 13th item.  
 
 ### Other Tips
 
@@ -197,8 +192,13 @@ Follow these instructions:
    "Include step descriptions as a separate comment" to generate more detailed
 comments.  Leave other boxes unchecked.
 
-1. Save the resulting file into "RedditCatsTest.java" to the root of the
-   exercise 3 directory.
+1. Save the resulting file "RedditCatsTest.java" to the
+   src/test/java/edu/pitt/cs test source directory.
+
+1. Add the following line to the top of "RedditCatsTest.java":
+   ```
+   package edu.pitt.cs;
+   ```
 
 ### JUnit set up (Chrome browser specific)
 
@@ -247,25 +247,60 @@ The Firefox web driver should work for all recent versions of Firefox.
 
 ### Running the JUnit class
 
-You can now run the RedditCatsTest JUnit class using the provided
-[TestRunner.java](TestRunner.java) using one of the following scripts:
+Before starting, let me warn you that your RedditCatsTest.java JUnit test class
+is **not going to work**, even after having made the above changes to designate
+the webdriver path.  That is because making Selenium work on websites requires
+some [massaging](#tips-for-junit--selenium-problem-solving) and the Selenium
+IDE code generation just takes you halfway there.  Moreover, Selenium IDE will
+sometimes generate code which is flat out incorrect (one glaring example is
+switching the locations of the expected and observed values in assertEquals
+assertions).  Which is just fine because this is going to be a learning
+opportunity for you to solve these problems and gain a deeper understanding of
+Selenium Web Driver API.
 
-* If you are running Windows:
-   ```
-   run.bat
-   ```
-
-* If you are running Mac or Linux:
-   ```
-   run.sh
-   ```
-
-* You can also run your Selenium tests on Eclipse using the "Run JUnit"
-  feature, after opening the provided Eclipse project.
+With full expectation with things will fail, let's invoke the Maven test phase:
+```
+mvn test
+```
 
 If things go properly, you will see the browser pop up repeatedly for each test
-case, perform the actions, and close.  In the command line, you should see "ALL
-TESTS PASSED", which is printed by TestRunner if there are no failures.
+case, perform the actions, and close.  In the command line, you should see:
+
+```
+...
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  0.917 s
+[INFO] Finished at: 2022-07-14T11:04:13-04:00
+[INFO] ------------------------------------------------------------------------
+```
+
+Most likely, you will see one or more failed tests, such as this:
+
+```
+...
+Results :
+
+Tests in error: 
+  fUNSORTBYCOMMENTS(edu.pitt.cs.RedditCatsTest): element click intercepted: Element <button data-testid="search-results-filter-sort" class="cmR5BF4NpBUm3DBMZCmJS _2jNQT-6WbFOjX2hdDWV56w _1g3g98ViMb36cM-peU17Jk BZDMD8yWu5imupa73nqYE">...</button> is not clickable at point (138, 149). Other element would receive the click: <div class="_1DK52RbaamLOWw5UPaht_S _3Ig_EsWWVLquWs2yBBQjec _1acwN_tUhJ8w-n7oCp-Aw3">...</div>(..)
+
+Tests run: 6, Failures: 0, Errors: 1, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:35 min
+[INFO] Finished at: 2022-07-14T11:00:40-04:00
+[INFO] ------------------------------------------------------------------------
+...
+```
+
+Please read the failure message and the stack trace for each failure to
+figure out what went wrong.  Then, modify each test case that fails using
+tips listed in the next section.
 
 ## Tips for JUnit + Selenium problem solving
 
@@ -341,7 +376,7 @@ either because it will slow down testing.
 
    **You may have to insert the above sleep code in your web driver when you
 test FUN-SORT-BY-COMMENT, between the command to type "catnip" and the command
-to pressing <Enter>.**  There is a race condition here because when you type
+to pressing [Enter].**  There is a race condition here because when you type
 "catnip" in the search box, a drop down menu with a list of suggestions
 appears, during which the search box is not responsive to user key strokes.  If
 the <Enter> key stroke arrives when the search box is in this state, the key
@@ -444,26 +479,20 @@ options.addPreference("geo.prompt.testing", false);
 options.addPreference("geo.prompt.testing.allow", false);
 ```
 
-## Submission
+# Submission
 
-Each pairwise group will do one submission to GradeScope as usual.  The
+Each pairwise group will do a group submission to GradeScope as usual.  The
 submitting member must use the "View or edit group" link at the top-right
 corner of the assignment page after submission to add his/her partner.  
 
 Submit the repository created by GitHub Classroom for your team to GradeScope
-at the **Exercise 3 GitHub** link.  Make sure you the files "Reddit Cats.side"
-and "RedditCatsTest.java" are in your submission.  Once you submit, GradeScope
-will run the autograder to grade you and give feedback.  If you get deductions,
-fix your code based on the feedback and resubmit.  Repeat until you don't get
+at the **Exercise 3 GitHub** link.  Make sure the files "Reddit Cats.side" and
+"RedditCatsTest.java" are in your submission.  Once you submit, GradeScope will
+run the autograder to grade you and give feedback.  If you get deductions, fix
+your code based on the feedback and resubmit.  Repeat until you don't get
 deductions.
 
-My solution test cases are stored as the [Reddit Cats
-Solution.side](Reddit%20Cats%20Solution.side) file afore mentioned.  Compare
-with your test cases (this is not the only way to implement the test cases).
-It is in JSON format so you should be able to open it with a text editor and
-trace it with your eyes, if that's what you prefer.
-
-## GradeScope Feedback
+# GradeScope Feedback
 
 The GradeScope autograder works in 2 phases:
 
@@ -510,21 +539,20 @@ public void setUp() {
 }
 ```
 
-**Note: Please do not add any setup code other than the ones shown above
-because they will be replaced by GradeScope.  Also, please do not mess with the
-beginning of the method declaration "public void setUp() {" since it is used
-for pattern detection in GradeScope to replace the method.**
+**Note: Please do not mess with the method declaration "public void setUp() {"
+since it is used for pattern detection in GradeScope to replace the method.**
 
-## Groupwork Plan
+# Groupwork Plan
 
-I suggest that each partner in the group works on this individually.  There is
+I want each member in the group to work on this individually and that is why I
+created individual repositories in GitHub Classroom.  Practically, there is
 only one single file that you will be modifying the Selenium IDE (.side)
 project file, or the RedditCatsTest.java file.  And it would be difficult for
 both of you to work on that single file.  Parallel modifications would result
 in frequent merge conflicts.  When both of you are done, compare your work and
 submit one finalized version to GradeScope.
 
-## Resources
+# Resources
 
 These links are the same ones posted at the end of the slides:
 
@@ -536,3 +564,54 @@ https://www.selenium.dev/selenium-ide/docs/en/api/commands
 
 * Selenium WebDriver Tutorial:
 https://www.selenium.dev/documentation/webdriver/
+
+* Official W3C XPath specification:
+https://www.w3.org/TR/xpath/
+
+* Unofficial XPath tutorial:
+https://www.w3schools.com/xml/xpath_intro.asp.
+
+# Extra Credit
+
+DUE: October 17 (Monday), 2022 before start of class
+
+## Description
+
+This extra credit is going to be 0.2 points out of 100 points for the entire
+course, for anyone who is able to do this.
+
+Previously, the suggested method for testing FUN-RULES-12-ITEMS was to use
+"assert element present" for the 12th item, followed by a "assert element not
+present" for the 13th item.  
+
+Admittedly, this is clunky.  It would be much cleaner if we could count the
+number elements directly and verify that it is 12.
+
+The Selenium IDE command "store xpath count" allows you to count the number of
+elements that matches an xpath and store it inside a Selenium variable.  You
+can later verify the value of the variable using the "assert" command.  Now,
+you will not be able to acquire that xpath using the target selector button in
+the IDE.  You will have to inspect the element on your web browser and come up
+with a pattern than can match all 12 items in that list.  On both the Chrome
+and Firefox browsers, when you right click on an HTML element to bring up the
+context menu, there is an "Inspect" menu.  Clicking on the "Inspect" menu
+brings up Inspector view.  When you right click on the highlighted element
+again, there is a "Copy" menu on the context menu.  This allows you to copy the
+XPath of the given element.
+
+You will have to do a little bit of your own research on xpaths to figure out
+what actual XPath to pass to the "store xpath count" command.  You can read the
+[official W3C specification](https://www.w3.org/TR/xpath/).
+
+But just like most specifications, it is focused on exact specification rather
+than readability.  You will find this unofficial tutorial using examples more
+digestible: https://www.w3schools.com/xml/xpath_intro.asp.
+
+
+## Submission
+
+Please do a group submission, like the exercise.  Submit the same repository
+that you submitted for the exercise at the **Exercise 3 Extra Credit** link.
+You should get a full score on the autograder and have used "store xpath count"
+to get credit.  Make sure the files "Reddit Cats.side" and
+"RedditCatsTest.java" are in your submission.  
