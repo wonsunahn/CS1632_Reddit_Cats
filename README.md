@@ -23,9 +23,9 @@
 
 # CS 1632 - Software Quality Assurance
 
-* DUE: September 30 (Friday), 2022 11:59 PM
+* DUE: February 10 (Friday), 2023 11:59 PM
 
-**GitHub Classroom Link:** https://classroom.github.com/a/Y_8ZHDtn
+**GitHub Classroom Link:** TBD
 
 ## Description
 
@@ -37,13 +37,46 @@ https://www.reddit.com/r/cats/
 
 It was chosen because it is a nice safe subreddit which is policed pretty well.  Besides, it's cats.
 
-First, let's start by adding the Selenium IDE browser extension for your web
-browser by selecting "Chrome Download" or "Firefox Download" on the below
-website:
+## Prerequisites
 
-https://www.selenium.dev/selenium-ide/
+1. Please install the [Chrome web browser](https://www.google.com/chrome/)
+   or the [Firefox web browser](https://www.mozilla.org/en-US/firefox/new/).
 
-Then, open Selenium IDE by clicking on the newly created browser extension with
+1. Please install the web driver for the browser of your choice.  The
+   Selenium people just recently announced a new tool called Selenium
+Manager that can automatically download and install a web driver that
+matches your current Chrome browser.  You can invoke Selenium Manager as
+follows, if you use Windows:
+   
+   ```
+   selenium-manager\windows\selenium-manager.exe --browser chrome
+   ```
+
+   If you use MacOS:
+
+   ```
+   selenium-manager/macos/selenium-manager --browser chrome
+   ```
+
+   If you use Linux:
+
+   ```
+   selenium-manager/linux/selenium-manager --browser chrome
+   ```
+
+   On running this tool, you should see something similar to the below:
+
+   ```
+   > selenium-manager\windows\selenium-manager.exe --browser chrome
+   INFO    C:\Users\USERNAME\.cache\selenium\chromedriver\win32\109.0.5414.74\chromedriver.exe
+   ```
+
+1. Please adding the Selenium IDE browser extension for your web browser by
+   selecting "Chrome Download" or "Firefox Download" on the below website:
+
+   https://www.selenium.dev/selenium-ide/
+
+   Then, open Selenium IDE by clicking on the newly created browser extension with
 the "Se" symbol.  You should see a pop up window that looks very similar to the
 one shown on the lecture slides.
 
@@ -67,7 +100,7 @@ FUN-TITLE: "assert title"
 
 FUN-JOIN-BUTTON-EXISTS - "assert text"
 
-FUN-SIGNUP-LINK - "store attribute" followed by "assert".  You will be
+FUN-LOGIN-LINK - "store attribute" followed by "assert".  You will be
 storing the href attribute value to a Selenium variable and asserting on the
 value of that variable.  Now the target argument for "store attribute" does
 not directly take a locator string.  If you see the Reference tab for the
@@ -200,50 +233,12 @@ comments.  Leave other boxes unchecked.
    package edu.pitt.cs;
    ```
 
-### JUnit set up (Chrome browser specific)
+1. Also add the following line in the list of imports:
+   ```
+   import static org.hamcrest.MatcherAssert.assertThat;
+   ```
 
-If you generated your JUnit file using the Chrome browser Selenium IDE
-extension, you will have to modify it to do some additional set up.
-
-Please add these line(s) to the beginning of the @Before setUp() method in the
-generated RedditCatsTest.java file:
-
-```
-System.setProperty("webdriver.chrome.driver", "Chrome/chromedriver-win32.exe");
-```
-
-If you are not using Windows, replace chromedriver-win32.exe with the web driver
-compatible with your OS.
-
-Note that the Chrome web driver only works if you have Chrome version 98
-installed on your computer (the most recent version as of today).  If you have
-a different version of Chrome, you may have to download the appropriate
-web driver from:
-
-https://chromedriver.chromium.org/downloads
-
-Your Chrome version can be obtained by clicking on the vertical-3-dot menu at
-the top right corner of your browser, then Help > About Google Chrome.
-
-### JUnit set up (Firefox browser specific)
-
-If you generated your JUnit file using the Firefox browser Selenium IDE
-extension, you will have to modify it as well.
-
-Please add these line(s) to the beginning of the @Before setUp() method:
-
-```
-System.setProperty("webdriver.gecko.driver", "Firefox/geckodriver-win64.exe");
-System.setProperty("webdriver.firefox.logfile", "/dev/null");
-```
-
-Again, if you are not using Windows, replace geckodriver-win64.exe with the
-web driver compatible with your OS.  The second logfile property redirects
-verbose log messages emitted by the Firefox browser to a null device,
-discarding them.  This is done so that those messages don't get interleaved
-with JUnit messages and confuse you.
-
-The Firefox web driver should work for all recent versions of Firefox.
+   This gets rid of the annoying crossouts on assertThat calls in VSCode.
 
 ### Running the JUnit class
 
@@ -263,6 +258,8 @@ With full expectation with things will fail, let's invoke the Maven test phase:
 mvn test
 ```
 
+Alternatively, you may invoke the Test Runner extension for JUnit on VSCode.
+
 If things go properly, you will see the browser pop up repeatedly for each test
 case, perform the actions, and close.  In the command line, you should see:
 
@@ -274,7 +271,7 @@ Tests run: 6, Failures: 0, Errors: 0, Skipped: 0
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
 [INFO] Total time:  0.917 s
-[INFO] Finished at: 2022-07-14T11:04:13-04:00
+[INFO] Finished at: 2023-01-14T11:04:13-04:00
 [INFO] ------------------------------------------------------------------------
 ```
 
@@ -293,7 +290,7 @@ Tests run: 6, Failures: 0, Errors: 1, Skipped: 0
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
 [INFO] Total time:  01:35 min
-[INFO] Finished at: 2022-07-14T11:00:40-04:00
+[INFO] Finished at: 2023-01-14T11:00:40-04:00
 [INFO] ------------------------------------------------------------------------
 ...
 ```
@@ -337,13 +334,13 @@ proceed immediately if it does.  Insert the following line in the @Before
 setUp() method:
 
    ```
-   driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+   driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
    ```
 
    In order to use that line, you will need to also import this library:
 
    ```
-   import java.util.concurrent.TimeUnit;
+   import java.time.Duration;
    ```
 
    Selenium IDE internally uses an implicit wait time of 30 seconds
@@ -576,7 +573,7 @@ https://www.w3schools.com/cssref/css_selectors.asp
 
 # Extra Credit
 
-DUE: October 17 (Monday), 2022 before start of class
+DUE: February 28 (Tuesday), 2023 before start of class
 
 ## Description
 
