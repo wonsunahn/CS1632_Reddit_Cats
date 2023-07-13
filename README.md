@@ -10,8 +10,11 @@
     + [How to export to JUnit for Selenium IDE](#how-to-export-to-junit-for-selenium-ide)
     + [Running the JUnit class](#running-the-junit-class)
   * [Tips for JUnit + Selenium problem solving](#tips-for-junit--selenium-problem-solving)
-    + [How to disable pop-ups (Chrome browser specific)](#how-to-disable-pop-ups-chrome-browser-specific)
-    + [How to disable pop-ups (Firefox browser specific)](#how-to-disable-pop-ups-firefox-browser-specific)
+    + [How to deal with race conditions](#how-to-deal-with-race-conditions)
+    + [How to enforce uniform window sizes](#how-to-enforce-uniform-window-sizes)
+    + [How to disable pop-ups](#how-to-disable-pop-ups)
+      - [Chrome browser specific](#chrome-browser-specific)
+      - [Firefox browser specific](#firefox-browser-specific)
 - [Submission](#submission)
 - [GradeScope Feedback](#gradescope-feedback)
 - [Groupwork Plan](#groupwork-plan)
@@ -22,9 +25,9 @@
 
 # CS 1632 - Software Quality Assurance
 
-* DUE: February 10 (Friday), 2023 11:59 PM
+* DUE: July 18 (Tuesday), 2023 11:30 AM
 
-**GitHub Classroom Link:** https://classroom.github.com/a/FwmtiM_U
+**GitHub Classroom Link:** TBD
 
 ## Description
 
@@ -44,20 +47,23 @@ It was chosen because it is a nice safe subreddit which is policed pretty well. 
 1. Please install the web driver for the browser of your choice.  The
    Selenium people just recently announced a new tool called Selenium
 Manager that can automatically download and install a web driver that
-matches your current Chrome browser.  You can invoke Selenium Manager as
-follows, if you use Windows:
+matches your current browser.  You can invoke Selenium Manager as
+follows, assuming you are using Chrome.  If you want to use Firefox, you can
+just replace "chrome" with "firefox" in the instructions.
+
+   On Windows:
    
    ```
    selenium-manager\windows\selenium-manager.exe --browser chrome
    ```
 
-   If you use MacOS:
+   On MacOS:
 
    ```
    selenium-manager/macos/selenium-manager --browser chrome
    ```
 
-   If you use Linux:
+   On Linux:
 
    ```
    selenium-manager/linux/selenium-manager --browser chrome
@@ -67,7 +73,7 @@ follows, if you use Windows:
 
    ```
    > selenium-manager\windows\selenium-manager.exe --browser chrome
-   INFO    C:\Users\USERNAME\.cache\selenium\chromedriver\win32\109.0.5414.74\chromedriver.exe
+   INFO    C:\Users\USERNAME\.cache\selenium\chromedriver\win32\114.0.5735.90\chromedriver.exe
    ```
 
 1. Please adding the Selenium IDE browser extension for your web browser by
@@ -97,9 +103,15 @@ You will want to use the below commands and assertions to test each of the requi
 
 FUN-TITLE: "assert title"
 
-FUN-JOIN-BUTTON-EXISTS - "assert text"
+FUN-JOIN-BUTTON-EXISTS - "assert element present".  You will need to find a
+locator that is able to locate a button that contains the text "Join" inside
+it.  Note, the default locator provided by Selenium IDE (either CSS selector
+or XPath) looks for a button at the designated location in the HTML page,
+but does not specifically look for a button with the "Join" text.  This can
+lead to false negative defects if the button contains some other text, or
+false positive defects if the "Join" button is moved to some other location.
 
-FUN-LOGIN-LINK - "store attribute" followed by "assert".  You will be
+FUN-WIKI-LINK - "store attribute" followed by "assert".  You will be
 storing the href attribute value to a Selenium variable and asserting on the
 value of that variable.  Now the target argument for "store attribute" does
 not directly take a locator string.  If you see the Reference tab for the
@@ -118,7 +130,7 @@ This test is dependent on the current state of the reddit database since
 postings and comments are fluid, but let's assume that the database is given as
 a precondition ;).
 
-FUN-RULE-3 - "assert text".
+FUN-RULE-3 - "assert text" of the rule text.
 
 FUN-RULES-12-ITEMS - "assert element present" for the 12th item, followed by
 a "assert element not present" for the locator for the 13th item.  
@@ -270,7 +282,7 @@ Tests run: 6, Failures: 0, Errors: 0, Skipped: 0
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
 [INFO] Total time:  0.917 s
-[INFO] Finished at: 2023-01-14T11:04:13-04:00
+[INFO] Finished at: 2023-07-11T11:04:13-04:00
 [INFO] ------------------------------------------------------------------------
 ```
 
@@ -289,7 +301,7 @@ Tests run: 6, Failures: 0, Errors: 1, Skipped: 0
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
 [INFO] Total time:  01:35 min
-[INFO] Finished at: 2023-01-14T11:00:40-04:00
+[INFO] Finished at: 2023-07-11T11:00:40-04:00
 [INFO] ------------------------------------------------------------------------
 ...
 ```
@@ -306,102 +318,120 @@ because massaging the code to make it work will force you to read Selenium code
 and get used to the APIs.  The IDE is more of a starter tool, and you will be
 coding against the web driver APIs when you become an expert.
 
-1. One big headache with Selenium is that there is an inherent **race
-   condition** in the way it works.  There are three components to this
+### How to deal with race conditions
+
+One big headache with Selenium is that there is an inherent **race
+condition** in the way it works.  There are three components to this
 distributed system: the web browser that renders the web page and runs
 JavaScript, the web server that sends web data to the web browser
 intermittently, and the web driver that sends commands to the web browser to
 control its actions.  These three components will not synchronize with each
-other unless you tell them to and events (such as page loads from web server,
-DOM element rendering by the web browser, and commands from the web driver) can
-happen in arbitrary order.  For example, your web browser may not have finished
-rendering a button before your web driver sends a command to click on it.  This
-leads to nondeterminism and unreproducible testing.
+other unless you tell them to and events (such as page loads from web
+server, DOM element rendering by the web browser, and commands from the web
+driver) can happen in arbitrary order.  For example, your web browser may
+not have finished rendering a button before your web driver sends a command
+to click on it.  This leads to nondeterminism and unreproducible testing.
 
-   Fortunately, Selenium does provide you with a long list of synchronization
+Fortunately, Selenium does provide you with a long list of synchronization
 APIs that allow you to wait for a particular event to happen.  Details about
 the different types of wait APIs available on Selenium are described in:
 
-   https://www.selenium.dev/documentation/webdriver/waits/
+https://www.selenium.dev/documentation/webdriver/waits/
    
-   Most of the time, setting an **implicit wait** at the beginning is enough to
+Most of the time, setting an **implicit wait** at the beginning is enough to
 solve most race conditions.  It ensures that the web driver implicitly waits
-for the given amount of time for a target element to be rendered when sending
-any command, before flagging a failure. It is flexible in that it will only
-wait the given amount of time if the element does not load quickly, and will
-proceed immediately if it does.  Insert the following line in the @Before
-setUp() method:
+for the given amount of time for a target element to be rendered when
+sending any command, before flagging a failure. It is flexible in that it
+will only wait the given amount of time if the element does not load
+quickly, and will proceed immediately if it does.  Insert the following line
+in the @Before setUp() method:
 
-   ```
-   driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
-   ```
+```
+driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+```
 
-   In order to use that line, you will need to also import this library:
+In order to use that line, you will need to also import this library:
 
-   ```
-   import java.time.Duration;
-   ```
+```
+import java.time.Duration;
+```
 
-   Selenium IDE internally uses an implicit wait time of 30 seconds
+Selenium IDE internally uses an implicit wait time of 30 seconds
 when running a script, but when it exports the script to the JUnit test, it
 fails to insert that implicit wait in the @Before setUp() method.  So if you
 want one, you need to insert it yourself.
 
-   Sometimes, you may have to synchronize on events other than an element
+Sometimes, you may have to synchronize on events other than an element
 getting rendered.  For that, you will have to do an **explicit wait** on that
 event.  Here is an exhaustive list of events that you can wait on:
 
-   https://www.selenium.dev/selenium/docs/api/java/org/openqa/selenium/support/ui/ExpectedConditions.html
+https://www.selenium.dev/selenium/docs/api/java/org/openqa/selenium/support/ui/ExpectedConditions.html
 
-   In some rare cases, the event that you want to wait on is not in the list of
-events that Selenium supports.  In that case, you have no choice but to insert
-an arbitrary wait on your own:
+In some very rare cases, the event that you want to wait on is not in the
+list of events that Selenium supports.  In that case, you have no choice but
+to insert an arbitrary wait such as "Thread.sleep(3000)" (wait for 3
+seconds).  It is best to avoid this because this is not true synchronization
+and it only reduces the likelyhood of race conditions without removing them
+entirely.  And the catch is, we cannot wait for too long either because it
+will slow down testing.
 
-   ```
-   try {
-     Thread.sleep(3000);
-   } catch (InterruptedException e) {
-   }
-   ```
+Luckily, most of our race conditions in Reddit Cats can be solved by
+simply setting the implicit wait time at the beginning as explained above.
+We just need to wait until elements appear on screen before performing
+actions.  Now there is one case where an explicit wait is needed.  In the
+FUN-SORT-BY-COMMENTS test, after having typed "catnip" in the search box,
+there is a brief period of time when the search box is temporarily disabled,
+and if the next command to type the "Enter" key happens during this period,
+it will be ignored.  This brief period of time is when a drop down box is
+displayed below the search box immediately after "catnip" has been typed
+with the text "Search for “catnip” in r/cats", during which the search box is
+disabled.  So, the solution is to wait until the drop down appears before
+sending the "Enter" key to the search box.  There is a plethora of "wait"
+commands on Selenium IDE (visible when you type "Wait" in the command box).
+The one we want to use in this situation is "wait for element visible", and
+we want to wait for the locator "xpath=//span[contains(.,'Search for “catnip” in r/cats')]" to be visible before sending the "Enter" key.
 
-   The above code will insert an arbitrary delay of 3000 ms (3 seconds) in your
-web driver at the place of insertion.  It is arbitrary because there is no
-guarantee that the event you are waiting for will happen within 3 seconds ---
-we just hope that it does.  And the catch is, we cannot wait for too long
-either because it will slow down testing.
+If you convert the Selenium IDE command to JUnit code, it will result in
+the following code snippet:
 
-   Luckily, all our race conditions in Reddit Cats can be solved by simply
-setting the implicit wait time at the beginning as explained above.  We just
-need to wait until elements appear on screen before performing action.
+```
+{
+   WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+   wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(.,\'Search for “catnip” in r/cats\')]")));
+}
+```
 
-1. Another common problem is that depending on the browser window size,
-   certain elements may disappear.  For example, the Reddit site would hide
-the "rules" bar on the right hand side if the windows is too narrow.  One
-way to solve this is to uniformly set the window size at the @Before setUp()
-method so that all your test cases are tested on the same dimensions (and
-remove all calls to setSize in your test cases):
+### How to enforce uniform window sizes
+
+Another common problem is that depending on the browser window size, certain
+elements may disappear.  For example, the Reddit site would hide the "rules"
+bar on the right hand side if the windows is too narrow.  One way to solve
+this is to uniformly set the window size at the @Before setUp() method so
+that all your test cases are tested on the same dimensions (and remove all
+calls to setSize in your test cases):
 
    ```
    driver.manage().window().setSize(new Dimension(1200, 800));
    ```
-  
-1. Yet another common problem is that some websites have pesky pop-up
-   windows that prevents the Selenium Web Driver from interacting with the
-website, resulting in test failure.  For example, the reddit.com has a pop
-up window asking whether you want to "Show notifications" for the website
-when visited for the first time.  Until you click "Block" or "Allow" on the
-pop up, the rest of the website is inaccessible.  Once you click on a
-choice, reddit.com will store your choice in a cookie and not ask you on
-subsequent visits.
 
-   When testing with Selenum IDE, the pop-up will not occur because most
+### How to disable pop-ups 
+
+Yet another common problem is that some websites have pesky pop-up windows
+that prevents the Selenium Web Driver from interacting with the website,
+resulting in test failure.  For example, the reddit.com has a pop up window
+asking whether you want to "Show notifications" for the website when visited
+for the first time.  Until you click "Block" or "Allow" on the pop up, the
+rest of the website is inaccessible.  Once you click on a choice, reddit.com
+will store your choice in a cookie and not ask you on subsequent visits.
+
+When testing with Selenum IDE, the pop-up will not occur because most
 likely this is not our first visit and as a browser extension, Selenium IDE
 has access to cookies.  However, when testing with the exported JUnit test,
 JUnit launches a standalone web browser instance in its own sandbox so it
 will not have access to pre-existing cookies.  That means the notification
 pop up will occur on the JUnit test every time.
 
-### How to disable pop-ups (Chrome browser specific)
+#### Chrome browser specific
 
 If you do not want any interference from pop-ups during testing, there is a
 simple way to do it.  Replace the following line in the @Before setUp() method:
@@ -432,8 +462,9 @@ To disable this one, simply add this line to the above:
 ```
 options.addArguments("--disable-geolocation");
 ```
+)
 
-### How to disable pop-ups (Firefox browser specific)
+#### Firefox browser specific
 
 If you do not want pop-ups during testing with Firefox, it.  Replace the
 following line in the @Before setUp() method:
@@ -566,7 +597,7 @@ https://www.w3schools.com/cssref/css_selectors.asp
 
 # Extra Credit
 
-DUE: February 28 (Tuesday), 2023 before start of class
+DUE: July 25 (Tuesday), 2023 before start of class
 
 ## Description
 
