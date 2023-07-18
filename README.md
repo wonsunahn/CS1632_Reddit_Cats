@@ -547,13 +547,13 @@ with my own version that looks like the following:
 ```
 @Before
 public void setUp() {
-    System.setProperty("webdriver.chrome.driver", "Linux/chromedriver");
     ChromeOptions options = new ChromeOptions();
     options.addArguments("--headless");			// Enable running without a display
+    options.addArguments("--disable-notifications");
     options.addArguments("--disable-dev-shm-usage");	// Disable /dev/shm which is limited to 64MB in Docker and use /tmp/ instead to store shared memory files
     options.addArguments("--no-sandbox");		// A quick and dirty way to run Selenium as root, bypassing the OS security model
     driver = new ChromeDriver(options);
-    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     driver.manage().window().setSize(new Dimension(1200, 800));
     js = (JavascriptExecutor) driver;
     vars = new HashMap<String, Object>();
